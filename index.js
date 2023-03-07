@@ -1,11 +1,11 @@
 const express = require("express");
-const mongoose = require("mongoose");
-const dotenv = require("dotenv");
 const cors = require("cors");
+const dotenv = require("dotenv");
+const mongoose = require("mongoose");
+
+const userRouter = require("./Routes/UserRouter");
 
 dotenv.config({ path: "./config.env" });
-
-const UserRouter = require("./Routes/UserRouter");
 
 const app = express();
 app.use(express.json());
@@ -14,12 +14,12 @@ app.use(cors({
     origin: "*"
 }));
 
-app.use("/", UserRouter);
+app.use("/", userRouter);
 
-let DB = process.env.URL.replace("<password>", process.env.password);
-mongoose.connect(DB).then(() => console.log("Database Connected")).catch((err) => console.log("Database not Connected"));
+const DB = process.env.URL.replace('<password>', process.env.password);
+mongoose.connect(DB).then(() => console.log("Database Connected")).catch((err) => console.log("Database Not Connected"));
 
 let port = process.env.port;
 app.listen(port, () => {
-    console.log(`Port is running on ${port}`);
-})
+    console.log(`Port is running on ${port} port`);
+});
